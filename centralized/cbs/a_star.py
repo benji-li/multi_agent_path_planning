@@ -20,7 +20,7 @@ class AStar():
             total_path.append(current)
         return total_path[::-1]
 
-    def search(self, agent_name, max_time = 20):
+    def search(self, agent_name, max_time = 40):
         """
         low level search 
         """
@@ -48,7 +48,6 @@ class AStar():
 
             open_set -= {current}
             closed_set |= {current}
-
             if current.time >= max_time:
                 # ensure not searching forever
                 continue
