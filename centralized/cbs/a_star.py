@@ -20,7 +20,7 @@ class AStar():
             total_path.append(current)
         return total_path[::-1]
 
-    def search(self, agent_name):
+    def search(self, agent_name, max_time = 20):
         """
         low level search 
         """
@@ -49,6 +49,10 @@ class AStar():
             open_set -= {current}
             closed_set |= {current}
 
+            if current.time >= max_time:
+                # ensure not searching forever
+                continue
+
             neighbor_list = self.get_neighbors(current)
 
             for neighbor in neighbor_list:
@@ -67,4 +71,3 @@ class AStar():
                 g_score[neighbor] = tentative_g_score
                 f_score[neighbor] = g_score[neighbor] + self.admissible_heuristic(neighbor, agent_name)
         return False
-

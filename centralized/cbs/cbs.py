@@ -214,7 +214,10 @@ class Environment(object):
 
     def is_at_goal(self, state, agent_name):
         goal_state = self.agent_dict[agent_name]["goal"]
-        return state.is_equal_except_time(goal_state)
+        earliest_goal_time = 0
+        for vertex_constraint in self.constraint_dict[agent_name].vertex_constraints:
+            earliest_goal_time = max(vertex_constraint.time + 1, earliest_goal_time)
+        return state.is_equal_except_time(goal_state) and state.time >= earliest_goal_time
 
     def make_agent_dict(self):
         for agent in self.agents:
